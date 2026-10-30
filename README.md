@@ -4,6 +4,8 @@
 
 Live: https://quedamos.egregore85.workers.dev
 
+Inspired by [timeful.app](https://timeful.app).
+
 ## Develop
 
 ```sh
