@@ -1,0 +1,25 @@
+name = "quedamos"
+main = "src/worker.js"
+compatibility_date = "2026-10-01"
+
+# Builds public/styles.css (Tailwind) and copies the self-hosted font before dev/deploy.
+[build]
+command = "npm run build"
+watch_dir = ["src/styles.css", "public/app.js", "public/index.html"]
+
+[version_metadata]
+binding = "CF_VERSION_METADATA"
+
+[observability]
+enabled = true
+
+[[d1_databases]]
+binding = "DB"
+database_name = "quedamos-db"
+database_id = "49556843-fc26-43d5-acaf-6f2ca3955860"
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+run_worker_first = ["/api/*"]

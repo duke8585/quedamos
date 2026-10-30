@@ -1,0 +1,20 @@
+{
+  "name": "quedamos",
+  "private": true,
+  "scripts": {
+    "build": "mkdir -p public/fonts && cp node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2 node_modules/@fontsource-variable/inter/files/inter-latin-ext-wght-normal.woff2 public/fonts/ && tailwindcss -i src/styles.css -o public/styles.css --minify",
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:migrate:local": "wrangler d1 migrations apply quedamos-db --local",
+    "db:migrate:remote": "wrangler d1 migrations apply quedamos-db --remote",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-plugin": "^1.4.11",
+    "@fontsource-variable/inter": "^5.3.0",
+    "@tailwindcss/cli": "^4.3.3",
+    "tailwindcss": "^4.3.3",
+    "vitest": "^4.1.12",
+    "wrangler": "^4.0.0"
+  }
+}

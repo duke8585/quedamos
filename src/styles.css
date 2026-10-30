@@ -1,0 +1,137 @@
+@import "tailwindcss";
+@source "../public";
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("/fonts/inter-latin-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("/fonts/inter-latin-ext-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+@layer base {
+  html {
+    @apply bg-stone-50 text-stone-900 antialiased;
+    font-size: 17px;
+    font-feature-settings: "cv11", "ss01", "tnum";
+  }
+  :focus-visible { @apply outline-3 outline-offset-2 outline-emerald-500; }
+}
+
+@layer components {
+  .card { @apply rounded-3xl bg-white p-5 shadow-sm ring-1 ring-stone-200/80 sm:p-6; }
+
+  .btn {
+    @apply inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-full bg-white px-5 font-semibold
+      whitespace-nowrap text-stone-900 ring-1 ring-stone-300 transition hover:bg-stone-100 active:scale-[.98]
+      disabled:cursor-default disabled:opacity-50;
+  }
+  .btn-primary { @apply bg-stone-900 text-white ring-stone-900 hover:bg-stone-700; }
+  .btn-green { @apply bg-emerald-600 text-white ring-emerald-600 hover:bg-emerald-700; }
+  .btn-danger { @apply hover:bg-rose-50 hover:text-rose-700 hover:ring-rose-300; }
+  .btn-sm { @apply min-h-9 px-3.5 text-sm; }
+  .btn-icon { @apply min-h-9 w-9 px-0 text-lg; }
+
+  .input {
+    @apply min-h-11 w-full min-w-0 rounded-2xl bg-white px-4 text-stone-900 ring-1 ring-stone-300 transition
+      outline-none placeholder:text-stone-400 hover:ring-stone-400 focus:ring-2 focus:ring-stone-900;
+  }
+  .label { @apply flex flex-col gap-1.5 text-sm font-semibold text-stone-700; }
+
+  /* segmented control: buttons with aria-pressed */
+  .seg { @apply inline-flex gap-0.5 rounded-full bg-stone-200/70 p-1; }
+  .seg > button {
+    @apply inline-flex min-h-9 cursor-pointer items-center gap-2 rounded-full px-3.5 text-sm font-semibold text-stone-600
+      transition hover:text-stone-900;
+  }
+  .seg > button[aria-pressed="true"] { @apply bg-white text-stone-900 shadow-sm; }
+
+  .avatar {
+    @apply grid size-7 flex-none place-items-center rounded-full text-xs font-bold;
+    background: hsl(var(--h) 90% 88%);
+    color: hsl(var(--h) 55% 28%);
+  }
+  /* person picker in the editor: buttons with aria-pressed */
+  .chip {
+    @apply inline-flex min-h-9 flex-none cursor-pointer items-center gap-1.5 rounded-full bg-white py-1 pr-3 pl-1 text-sm font-semibold
+      whitespace-nowrap text-stone-800 ring-1 ring-stone-300 transition hover:bg-stone-100;
+  }
+  .chip > .truncate { @apply max-w-36; }
+  .chip[aria-pressed="true"] { @apply cursor-default bg-stone-900 text-white ring-stone-900 hover:bg-stone-900; }
+  .chip-add { @apply border border-dashed border-stone-400 bg-transparent pl-3 text-stone-600 ring-0 hover:text-stone-900; }
+  .badge { @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold whitespace-nowrap; }
+  .swatch { @apply inline-block size-3.5 flex-none rounded-[4px]; }
+  .swatch-av { @apply bg-emerald-500; }
+  .swatch-if { background: repeating-linear-gradient(135deg, var(--color-amber-300) 0 4px, var(--color-amber-200) 4px 8px); }
+}
+
+/* logo: four slots in different greens, like the heatmap */
+.logo { @apply grid size-8 grid-cols-2 gap-[3px] rounded-[10px] bg-emerald-50 p-[5px] ring-1 ring-emerald-200; }
+.logo i { @apply rounded-[3px]; }
+.logo i:nth-child(1) { @apply bg-emerald-200; }
+.logo i:nth-child(2) { @apply bg-emerald-500; }
+.logo i:nth-child(3) { @apply bg-emerald-700; }
+.logo i:nth-child(4) { @apply bg-emerald-400; }
+
+/* ---------- availability grid ---------- */
+.ag {
+  display: grid;
+  grid-template-columns: 3.25rem repeat(var(--cols), minmax(0, 1fr));
+  user-select: none;
+  -webkit-user-select: none;
+}
+.ag-head { @apply sticky top-16 z-10 flex flex-col items-center justify-end bg-stone-50/90 pb-1.5 text-center leading-tight backdrop-blur; }
+.ag-times { position: relative; }
+.ag-time { @apply absolute right-2 -translate-y-1/2 text-xs font-medium text-stone-500; }
+.ag-col { @apply relative border-l border-stone-200 bg-white; display: grid; grid-auto-rows: var(--row-h); }
+.ag-col:last-child { @apply border-r; }
+.ag-col.gap-before { @apply ml-1.5 border-l; }
+.ag.editing .ag-col { touch-action: none; cursor: crosshair; }
+
+.cell { @apply border-b border-stone-100; background: #fff; }
+.cell.hour-end { @apply border-stone-200; }
+.cell:last-child { @apply border-stone-200; }
+
+/* group heatmap: --a (0..1) = share of people available ("if needed" counts half) */
+.ag.group .cell { background: color-mix(in oklab, var(--color-emerald-600) calc(var(--a, 0) * 100%), #fff); }
+.ag.group .cell.all { background: var(--color-emerald-700); }
+.ag.group .cell:hover { box-shadow: inset 0 0 0 2px var(--color-stone-900); }
+/* selected range: one outline around all its cells */
+.ag.group .cell.sel { --l: inset 2px 0 0 var(--color-stone-900); --r: inset -2px 0 0 var(--color-stone-900); box-shadow: var(--l), var(--r); }
+.ag.group .cell.sel.sel-top { box-shadow: var(--l), var(--r), inset 0 2px 0 var(--color-stone-900); }
+.ag.group .cell.sel.sel-bot { box-shadow: var(--l), var(--r), inset 0 -2px 0 var(--color-stone-900); }
+.ag.group .cell.sel.sel-top.sel-bot { box-shadow: inset 0 0 0 2px var(--color-stone-900); }
+
+/* one person's / my own availability */
+.cell[data-v="1"] { background: var(--color-emerald-500); }
+.cell[data-v="2"] { background: repeating-linear-gradient(135deg, var(--color-amber-300) 0 4px, var(--color-amber-200) 4px 8px); }
+/* drag preview while painting */
+.cell[data-p="1"] { background: var(--color-emerald-400); }
+.cell[data-p="2"] { background: var(--color-amber-200); }
+.cell[data-p="0"] { background: var(--color-stone-100); }
+
+/* editor: when the others are free, faintly behind the slots not painted yet */
+.ag.ghost .cell:not([data-v]):not([data-p]) { background: color-mix(in oklab, var(--color-emerald-900) calc(var(--a, 0) * 24%), #fff); }
+.ghost-legend { background: linear-gradient(to right, #fff, color-mix(in oklab, var(--color-emerald-900) 24%, #fff)); }
+
+.heat-legend { background: linear-gradient(to right, #fff, var(--color-emerald-600)); }
+
+@keyframes rise { from { opacity: 0; translate: -50% 12px; } }
+.toast-in { animation: rise .2s ease-out; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
