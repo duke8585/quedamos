@@ -4,7 +4,6 @@ import { describe, expect, it } from "vitest";
 // 2 days x 09:00-11:00 in 30-min slots = 8 slots per answer.
 const EVENT = {
   name: "Board games",
-  kind: "dates",
   days: ["2026-11-02", "2026-11-03"],
   startMinute: 540,
   endMinute: 660,

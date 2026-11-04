@@ -2,23 +2,9 @@ import { createRequire } from "node:module";
 import { describe, expect, it } from "vitest";
 
 // public/calendar.js is a plain browser script that also exports through module.exports.
-const { nextOccurrence, calStamp, zonedToUtc, icsEscape, foldIcsLine, icsText } = createRequire(import.meta.url)("../public/calendar.js");
+const { calStamp, zonedToUtc, icsEscape, foldIcsLine, icsText } = createRequire(import.meta.url)("../public/calendar.js");
 
 const wall = (iso) => Date.parse(`${iso}Z`); // wall-clock time held in UTC fields
-
-describe("nextOccurrence", () => {
-  const friday = new Date(2026, 9, 30, 15, 0); // Fri 30 Oct 2026, local time
-
-  it("counts today", () => {
-    expect(nextOccurrence(5, friday).toISOString()).toBe("2026-10-30T00:00:00.000Z");
-  });
-
-  it("finds later days this week and wraps to next week", () => {
-    expect(nextOccurrence(7, friday).toISOString().slice(0, 10)).toBe("2026-11-01");
-    expect(nextOccurrence(1, friday).toISOString().slice(0, 10)).toBe("2026-11-02");
-    expect(nextOccurrence(4, friday).toISOString().slice(0, 10)).toBe("2026-11-05");
-  });
-});
 
 describe("zonedToUtc", () => {
   it.each([

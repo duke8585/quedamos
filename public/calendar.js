@@ -1,13 +1,6 @@
 // Calendar export helpers (Google Calendar link, .ics file). Plain functions without page state,
 // loaded before app.js; test/calendar.test.js loads them through require().
 
-// Next date with ISO weekday `weekday` (1 = Monday), today included, as midnight UTC.
-function nextOccurrence(weekday, now = new Date()) {
-  const today = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
-  const current = new Date(today).getUTCDay() || 7;
-  return new Date(today + ((weekday - current + 7) % 7) * 86400000);
-}
-
 // 20261030T180000
 function calStamp(ms) {
   return new Date(ms).toISOString().replace(/[-:]/g, "").slice(0, 15);
@@ -64,4 +57,4 @@ function icsText({ uid, from, to, timeZone, summary, description, url, now = Dat
   return lines.map(foldIcsLine).join("\r\n") + "\r\n";
 }
 
-if (typeof module !== "undefined") module.exports = { nextOccurrence, calStamp, zonedToUtc, icsEscape, foldIcsLine, icsText };
+if (typeof module !== "undefined") module.exports = { calStamp, zonedToUtc, icsEscape, foldIcsLine, icsText };

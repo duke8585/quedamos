@@ -356,9 +356,7 @@ function newForm() {
   const today = new Date();
   return {
     name: "",
-    kind: "dates",
     dates: new Set(),
-    weekdays: new Set([1, 2, 3, 4, 5]),
     start: 9 * 60,
     end: 21 * 60,
     slot: 30,
@@ -378,19 +376,6 @@ function renderHome() {
       return h("option", { value: m, selected: m === selected }, fmtMin(m));
     });
 
-  const kindBody = h("div");
-  const renderKind = () => {
-    kindBody.replaceChildren(f.kind === "dates" ? datePicker() : weekdayPicker());
-    kindSeg.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.kind === f.kind)));
-  };
-  const kindSeg = h("div", { class: "seg", role: "group" },
-    ["dates", "week"].map((kind) =>
-      h("button", { type: "button", "data-kind": kind, onclick: () => ((f.kind = kind), renderKind()) },
-        t(kind === "dates" ? "kindDates" : "kindWeek")),
-    ),
-  );
-  renderKind();
-
   const timezones = typeof Intl.supportedValuesOf === "function" ? Intl.supportedValuesOf("timeZone") : [f.timezone];
   if (!timezones.includes(f.timezone)) timezones.unshift(f.timezone);
 
@@ -402,11 +387,9 @@ function renderHome() {
       const button = form.querySelector("button[type=submit]");
       button.disabled = true;
       try {
-        const days = f.kind === "dates" ? [...f.dates].sort() : [...f.weekdays].sort((a, b) => a - b);
         const { id } = await api("POST", "/events", {
           name: f.name,
-          kind: f.kind,
-          days,
+          days: [...f.dates].sort(),
           startMinute: f.start,
           endMinute: f.end,
           slotMinutes: f.slot,
@@ -427,7 +410,7 @@ function renderHome() {
     h("h2", { class: "text-xl font-bold" }, t("newEvent")),
     h("label", { class: "label" }, t("eventName"),
       h("input", { class: "input", required: true, maxlength: 200, placeholder: t("eventNamePh"), value: f.name, oninput: (e) => (f.name = e.target.value) })),
-    h("div", { class: "flex flex-col gap-3" }, h("div", null, kindSeg), kindBody),
+    datePicker(),
     h("div", { class: "grid grid-cols-2 gap-3 sm:grid-cols-4" },
       h("label", { class: "label" }, t("from"),
         h("select", { class: "input", onchange: (e) => (f.start = Number(e.target.value)) }, hourOptions(0, 23, f.start))),
@@ -582,28 +565,6 @@ function datePicker() {
   return h("div", { class: "flex flex-col gap-2" }, h("p", { class: "text-sm text-stone-500" }, t("pickDates")), wrap);
 }
 
-function weekdayPicker() {
-  const f = state.form;
-  return h("div", { class: "flex flex-col gap-2" },
-    h("p", { class: "text-sm text-stone-500" }, t("kindWeekHint")),
-    h("div", { class: "flex flex-wrap gap-1.5" },
-      [1, 2, 3, 4, 5, 6, 7].map((n) =>
-        h("button", {
-          type: "button",
-          "aria-pressed": String(f.weekdays.has(n)),
-          class: "min-h-11 min-w-14 cursor-pointer rounded-full px-3 font-semibold ring-1 ring-stone-300 transition hover:ring-stone-500 " +
-            "aria-pressed:bg-emerald-500 aria-pressed:text-white aria-pressed:ring-emerald-500",
-          onclick: (e) => {
-            if (f.weekdays.has(n)) f.weekdays.delete(n);
-            else f.weekdays.add(n);
-            e.currentTarget.setAttribute("aria-pressed", String(f.weekdays.has(n)));
-          },
-        }, fmtWeekday(weekdayDate(n))),
-      ),
-    ),
-  );
-}
-
 // ---------- event page ----------
 
 async function openEvent(id) {
@@ -708,9 +669,7 @@ function heat(responses) {
 function dayInfo(d) {
   const ev = state.data.event;
   const v = ev.days[d];
-  return ev.kind === "week"
-    ? { top: fmtWeekday(weekdayDate(v)), bottom: "", long: fmtWeekday(weekdayDate(v), "long") }
-    : { top: fmtWeekday(parseDate(v)), bottom: fmtDayMonth(parseDate(v)), long: `${fmtWeekday(parseDate(v))} ${fmtDayMonth(parseDate(v))}` };
+  return { top: fmtWeekday(parseDate(v)), bottom: fmtDayMonth(parseDate(v)), long: `${fmtWeekday(parseDate(v))} ${fmtDayMonth(parseDate(v))}` };
 }
 
 function slotLabel(i, len = 1) {
@@ -859,11 +818,11 @@ function renderGrid() {
   for (let d = first; d < last; d++) {
     const info = dayInfo(d);
     // gap between non-consecutive dates
-    const gap = ev.kind === "dates" && d > first && (parseDate(ev.days[d]) - parseDate(ev.days[d - 1])) > 86400000;
+    const gap = d > first && (parseDate(ev.days[d]) - parseDate(ev.days[d - 1])) > 86400000;
     heads.push(
       h("div", { class: "ag-head" + (gap ? " ml-1.5" : "") },
         h("span", { class: "text-xs font-semibold text-stone-500 uppercase" }, info.top),
-        info.bottom && h("span", { class: "text-sm font-bold" }, info.bottom),
+        h("span", { class: "text-sm font-bold" }, info.bottom),
       ),
     );
     const col = h("div", { class: "ag-col" + (gap ? " gap-before" : "") });
@@ -1571,18 +1530,11 @@ function calendarIcon() {
 
 // ---------- calendar export ----------
 
-// The real date of day column d. A usual week has none, so its next occurrence (today counts);
-// making it repeat is left to the calendar app.
-function calendarDate(d) {
-  const ev = state.data.event;
-  return ev.kind === "dates" ? parseDate(ev.days[d]) : nextOccurrence(ev.days[d]);
-}
-
 // Start and end as wall-clock time in the event's time zone, stored in UTC fields.
 function rangeTimes({ start, len }) {
   const ev = state.data.event;
   const rows = perDay();
-  const from = calendarDate(Math.floor(start / rows)).getTime() + (ev.startMinute + (start % rows) * ev.slotMinutes) * 60000;
+  const from = parseDate(ev.days[Math.floor(start / rows)]).getTime() + (ev.startMinute + (start % rows) * ev.slotMinutes) * 60000;
   return { from, to: from + len * ev.slotMinutes * 60000 };
 }
 

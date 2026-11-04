@@ -18,7 +18,7 @@ browser ──► Worker "quedamos" (quedamos.egregore85.workers.dev)
 
 ## Data model
 
-- `events`: `kind` = `dates` (days = `["2026-11-02", …]`) or `week` (days = ISO weekdays `[1..7]`), daily window `start_minute`-`end_minute`, `slot_minutes` (15/30/60/90/120/180, the window must be a multiple), `timezone`.
+- `events`: `days` = dates (`["2026-11-02", …]`), daily window `start_minute`-`end_minute`, `slot_minutes` (15/30/60/90/120/180, the window must be a multiple), `timezone`. `kind` is always `dates`: a "usual week" mode with weekdays instead of dates existed until migration 0004.
 - `events` also has `admin_password_hash` (PBKDF2), `admin_password_hint` (masked, e.g. `q******s`) and `archived_at`.
 - `responses`: one row per person, `name` unique per event (case-insensitive), `slots` = one char per (day, slot), day-major: `0` no, `1` available, `2` if needed. A week of 15-min slots is a few hundred bytes. `edit_token_hash` = SHA-256 of the token kept in the answering browser.
 - `versions`: numbered JSON snapshots of all answers per event (see Versions below). `admin_failures`: wrong admin passwords per event + IP.

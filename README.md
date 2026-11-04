@@ -1,6 +1,6 @@
 # Quedamos
 
-¿Quedamos? - "shall we meet?". A no-login when-can-everyone-meet tool: pick days (specific dates or a usual week), share the link, everyone paints their availability, and the group view shows a heatmap (greener = more people). Cloudflare Worker (API) + D1 + vanilla JS frontend styled with Tailwind v4, no runtime dependencies.
+¿Quedamos? - "shall we meet?". A no-login when-can-everyone-meet tool: pick dates, share the link, everyone paints their availability, and the group view shows a heatmap (greener = more people). Cloudflare Worker (API) + D1 + vanilla JS frontend styled with Tailwind v4, no runtime dependencies.
 
 Live: https://quedamos.egregore85.workers.dev
 

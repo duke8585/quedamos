@@ -67,17 +67,13 @@ async function route(request, db, parts) {
 
 async function createEvent(db, input) {
   const name = requireText(input.name, "Event name", "eventName", 200);
-  const kind = input.kind === "week" ? "week" : "dates";
   const days = Array.isArray(input.days) ? [...new Set(input.days)] : [];
   if (!days.length) throw new HttpError(400, "Pick at least one day", "noDays");
   if (days.length > MAX_DAYS) throw new HttpError(400, `At most ${MAX_DAYS} days`, "tooManyDays", { max: MAX_DAYS });
-  if (kind === "dates" && !days.every((d) => typeof d === "string" && DATE_RE.test(d))) {
+  if (!days.every((d) => typeof d === "string" && DATE_RE.test(d))) {
     throw new HttpError(400, "Invalid date", "badRequest");
   }
-  if (kind === "week" && !days.every((d) => Number.isInteger(d) && d >= 1 && d <= 7)) {
-    throw new HttpError(400, "Invalid weekday", "badRequest");
-  }
-  days.sort(kind === "week" ? (a, b) => a - b : undefined);
+  days.sort();
 
   const slotMinutes = Number(input.slotMinutes);
   const startMinute = Number(input.startMinute);
@@ -101,10 +97,10 @@ async function createEvent(db, input) {
     .prepare(
       `INSERT INTO events (id, name, kind, days, start_minute, end_minute, slot_minutes, timezone,
          admin_password_hash, admin_password_hint, created_at, updated_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+       VALUES (?, ?, 'dates', ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     )
     .bind(
-      id, name, kind, JSON.stringify(days), startMinute, endMinute, slotMinutes, timezone,
+      id, name, JSON.stringify(days), startMinute, endMinute, slotMinutes, timezone,
       adminPassword ? await hashPassword(adminPassword) : null, adminPassword ? passwordHint(adminPassword) : null, now, now,
     )
     .run();
@@ -122,7 +118,6 @@ async function getEvent(db, eventId) {
     event: {
       id: event.id,
       name: event.name,
-      kind: event.kind,
       days: JSON.parse(event.days),
       startMinute: event.start_minute,
       endMinute: event.end_minute,
