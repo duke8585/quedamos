@@ -1,6 +1,7 @@
 name = "quedamos"
 main = "src/worker.js"
 compatibility_date = "2026-10-01"
+routes = [{ pattern = "quedamos.egregore.fyi", custom_domain = true }]
 
 # Builds public/styles.css (Tailwind) and copies the self-hosted font before dev/deploy.
 [build]

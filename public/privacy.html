@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fafaf9">
+  <title>Privacy - Quedamos</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%23ecfdf5'/><rect x='6' y='6' width='9' height='9' rx='2.5' fill='%23a7f3d0'/><rect x='17' y='6' width='9' height='9' rx='2.5' fill='%2310b981'/><rect x='6' y='17' width='9' height='9' rx='2.5' fill='%23047857'/><rect x='17' y='17' width='9' height='9' rx='2.5' fill='%2334d399'/></svg>">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="min-h-dvh font-sans">
+  <header class="border-b border-stone-200/70 bg-stone-50/80">
+    <div class="mx-auto flex h-16 max-w-3xl items-center gap-3 px-4 sm:px-6">
+      <a href="/" class="flex items-center gap-2.5 rounded-xl text-xl font-bold tracking-tight text-stone-900">
+        <span class="logo" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span>Quedamos</span>
+      </a>
+      <nav class="ml-auto flex gap-3 text-sm font-semibold text-stone-500">
+        <a href="#en" class="hover:text-stone-900">English</a>
+        <a href="#de" class="hover:text-stone-900">Deutsch</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="mx-auto flex max-w-3xl flex-col gap-12 px-4 pt-8 pb-24 text-stone-700 sm:px-6 [&_h1]:text-3xl [&_h1]:font-bold [&_h1]:tracking-tight [&_h1]:text-stone-900 [&_h2]:mt-6 [&_h2]:text-lg [&_h2]:font-bold [&_h2]:text-stone-900 [&_p]:mt-2 [&_ul]:mt-2 [&_ul]:list-disc [&_ul]:pl-5 [&_li]:mt-1 [&_a]:underline">
+    <section id="en" lang="en">
+      <h1>Privacy</h1>
+      <p>Last updated: 4 November 2026</p>
+
+      <h2>What the server stores</h2>
+      <p>Quedamos has no accounts. When you create or answer an event, the server stores:</p>
+      <ul>
+        <li>the event: its name, dates, daily time window, slot size and time zone</li>
+        <li>each answer: the name you type and the slots you marked</li>
+        <li>a salted hash of the event's admin password, if one was set, and a hash of each answer's edit token</li>
+        <li>a version history of all answers of the event, so changes can be undone</li>
+        <li>for wrong admin passwords: the count of failed tries per event and IP address</li>
+      </ul>
+      <p>Anyone with an event's link can see that event and its answers. Events are not listed publicly.</p>
+
+      <h2>What stays in your browser</h2>
+      <p>Your recent events, the edit tokens of answers you created, masked admin password hints and your language are kept in your browser's local storage. There are no cookies, no analytics and no ads.</p>
+
+      <h2>Google Calendar (optional)</h2>
+      <p>You can connect Google Calendar to see when you are busy while you mark your availability. Quedamos then asks Google for permission to:</p>
+      <ul>
+        <li>read the free/busy times of your calendars (not the titles or details of your events)</li>
+        <li>read the list of your calendars, so you can choose which ones to include</li>
+      </ul>
+      <p>This happens entirely in your browser. Your busy times and the access token Google issues are never sent to the Quedamos server, never stored and never shared. The token lives in the open page only and expires after about an hour. Quedamos does not save your busy times as your answer; only the slots you mark yourself are saved.</p>
+      <p>Quedamos's use and transfer of information received from Google APIs adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including the Limited Use requirements.</p>
+      <p>You can remove Quedamos's access at any time at <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>.</p>
+
+      <h2>Hosting</h2>
+      <p>Quedamos runs on Cloudflare (Workers and D1). Cloudflare processes requests, including IP addresses, to serve the site and keeps request logs for a short time.</p>
+
+      <h2>Deleting data</h2>
+      <p>You can remove your own answer from an event. To have an event deleted, or for any other question, write to <a href="mailto:privacy@egregore.fyi">privacy@egregore.fyi</a>.</p>
+    </section>
+
+    <section id="de" lang="de">
+      <h1>Datenschutz</h1>
+      <p>Stand: 4. November 2026</p>
+
+      <h2>Was der Server speichert</h2>
+      <p>Quedamos hat keine Konten. Wenn du ein Event erstellst oder beantwortest, speichert der Server:</p>
+      <ul>
+        <li>das Event: Name, Tage, tägliches Zeitfenster, Slot-Länge und Zeitzone</li>
+        <li>jede Antwort: den Namen, den du eingibst, und die markierten Slots</li>
+        <li>einen gesalzenen Hash des Admin-Passworts, falls eines gesetzt ist, und einen Hash des Bearbeitungs-Tokens jeder Antwort</li>
+        <li>einen Versionsverlauf aller Antworten des Events, damit Änderungen rückgängig gemacht werden können</li>
+        <li>bei falschen Admin-Passwörtern: die Anzahl der Fehlversuche pro Event und IP-Adresse</li>
+      </ul>
+      <p>Wer den Link zu einem Event hat, sieht das Event und seine Antworten. Events werden nirgends öffentlich gelistet.</p>
+
+      <h2>Was in deinem Browser bleibt</h2>
+      <p>Deine letzten Events, die Bearbeitungs-Tokens deiner Antworten, maskierte Admin-Passwort-Hinweise und deine Sprache liegen im lokalen Speicher deines Browsers. Es gibt keine Cookies, keine Analyse und keine Werbung.</p>
+
+      <h2>Google Kalender (optional)</h2>
+      <p>Du kannst Google Kalender verbinden, um beim Markieren zu sehen, wann du schon belegt bist. Quedamos bittet Google dann um die Erlaubnis:</p>
+      <ul>
+        <li>die belegten Zeiten deiner Kalender zu lesen (nicht Titel oder Details deiner Termine)</li>
+        <li>die Liste deiner Kalender zu lesen, damit du auswählen kannst, welche einbezogen werden</li>
+      </ul>
+      <p>Das passiert ausschließlich in deinem Browser. Deine belegten Zeiten und das Zugriffstoken von Google werden nie an den Quedamos-Server geschickt, nie gespeichert und nie weitergegeben. Das Token lebt nur in der offenen Seite und läuft nach etwa einer Stunde ab. Quedamos übernimmt deine belegten Zeiten nicht als Antwort; gespeichert werden nur die Slots, die du selbst markierst.</p>
+      <p>Die Nutzung und Weitergabe von Informationen aus Google-APIs durch Quedamos hält sich an die <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, einschließlich der Limited-Use-Anforderungen.</p>
+      <p>Du kannst den Zugriff von Quedamos jederzeit unter <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a> entfernen.</p>
+
+      <h2>Hosting</h2>
+      <p>Quedamos läuft bei Cloudflare (Workers und D1). Cloudflare verarbeitet Anfragen samt IP-Adressen, um die Seite auszuliefern, und bewahrt Anfrage-Logs kurz auf.</p>
+
+      <h2>Daten löschen</h2>
+      <p>Deine eigene Antwort kannst du selbst aus einem Event entfernen. Damit ein Event gelöscht wird, oder bei anderen Fragen, schreib an <a href="mailto:privacy@egregore.fyi">privacy@egregore.fyi</a>.</p>
+    </section>
+  </main>
+</body>
+</html>

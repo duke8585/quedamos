@@ -443,6 +443,8 @@ function renderHome() {
       h("p", { class: "text-center text-sm text-stone-500" },
         t("inspiredBy"), " ",
         h("a", { href: "https://timeful.app", target: "_blank", rel: "noopener", class: "underline hover:text-stone-900" }, "timeful.app"),
+        " · ",
+        h("a", { href: "/privacy", class: "underline hover:text-stone-900" }, t("privacy")),
       ),
     ),
   );

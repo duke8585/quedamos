@@ -77,6 +77,7 @@ const STRINGS = {
 
     home_intro: "Pick the days, share the link, and everyone paints when they're free. The greener a slot, the more people can make it.",
     inspiredBy: "Inspired by",
+    privacy: "Privacy",
     newEvent: "New event",
     eventName: "What's the occasion?",
     eventNamePh: "e.g. Board game night",
@@ -225,6 +226,7 @@ const STRINGS = {
 
     home_intro: "Tage auswählen, Link teilen, und alle malen an, wann sie Zeit haben. Je grüner ein Feld, desto mehr Leute können.",
     inspiredBy: "Inspiriert von",
+    privacy: "Datenschutz",
     newEvent: "Neuer Termin",
     eventName: "Worum geht's?",
     eventNamePh: "z. B. Spieleabend",
