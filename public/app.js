@@ -829,7 +829,7 @@ function renderGrid() {
         h("span", { class: "text-sm font-bold" }, info.bottom),
       ),
     );
-    const col = h("div", { class: "ag-col" + (gap ? " gap-before" : "") });
+    const col = h("div", { class: "ag-col" + (gap ? " gap-before" : ""), "data-d": d });
     for (let r = 0; r < rows; r++) {
       const i = d * rows + r;
       const endMinute = ev.startMinute + (r + 1) * ev.slotMinutes;
@@ -891,6 +891,7 @@ function paintGrid() {
     }
   }
   markSelection();
+  gcalRenderBusy({ grid, event: state.data.event, rowH: ROW_HEIGHT[state.data.event.slotMinutes], show: editing && state.edit === state.self });
 }
 
 // ---------- painting (edit mode) ----------
@@ -1195,6 +1196,7 @@ function editPanel() {
         ),
       ),
       h("div", { class: "flex flex-col items-start gap-2" }, brushes, h("p", { class: "text-sm text-stone-500" }, t("paintHint"))),
+      isSelf && gcalSection(),
       hasOthers && h("label", { class: "flex cursor-pointer items-center gap-2 text-sm font-medium text-stone-600" },
         h("input", {
           type: "checkbox",
