@@ -27,7 +27,7 @@ Cloudflare setup, data model and design decisions: [ARCHITECTURE.md](ARCHITECTUR
 ## Layout
 
 - `src/worker.js` - `/api/*` handlers; everything else is served from `public/`
-- `public/` - SPA (`index.html`, `app.js`, `i18n.js`, `calendar.js`), hash routing `#/e/:id`
+- `public/` - SPA (`index.html`, `app.js`, `i18n.js`, `calendar.js`, `gcal.js`), hash routing `#/e/:id`
 - `src/styles.css` - Tailwind entry: theme, component classes, availability grid
 - `migrations/` - D1 schema (`events`, `responses`, `admin_failures`, `versions`)
-- `test/` - vitest: `api.test.js` (worker + local D1), `calendar.test.js` (time zones, .ics)
+- `test/` - vitest: `api.test.js` (worker + local D1), `calendar.test.js` (time zones, .ics), `gcal.test.js` (busy times to day ranges, DST)

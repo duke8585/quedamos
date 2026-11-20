@@ -6,7 +6,7 @@
 browser ──► Worker "quedamos" (quedamos.egregore85.workers.dev)
               ├─ /api/*      → src/worker.js (JSON API) ──► D1 "quedamos-db"
               └─ everything else → static assets from public/ (ASSETS binding)
-(planned) browser ──► Google Calendar API directly, never via the Worker
+browser ──► Google Calendar API directly (FreeBusy + calendar list), never via the Worker
 ```
 
 | Piece | What / where |
@@ -14,7 +14,7 @@ browser ──► Worker "quedamos" (quedamos.egregore85.workers.dev)
 | Worker | `quedamos`, single file `src/worker.js`, no runtime deps |
 | Database | D1 `quedamos-db`, binding `DB` |
 | Build / versioning / logs | Tailwind CLI + self-hosted Inter on build, `x-app-version` reload banner, Workers Logs on |
-| Tests | `npm test`: vitest, API tests run the real worker in the Workers runtime against a local D1 (`@cloudflare/vitest-plugin`), plus unit tests for `public/calendar.js` |
+| Tests | `npm test`: vitest, API tests run the real worker in the Workers runtime against a local D1 (`@cloudflare/vitest-plugin`), plus unit tests for `public/calendar.js` and the pure helpers of `public/gcal.js` |
 
 ## Data model
 
@@ -27,6 +27,7 @@ browser ──► Worker "quedamos" (quedamos.egregore85.workers.dev)
 - **Versions.** `versions` holds a JSON snapshot of all answers (incl. edit token hashes) after every change. Autosave fires every few hundred ms while painting, so an edit of the same answer within 15 minutes of that answer's previous version updates it instead of adding one: the atom is "a painting session of one person". Restore replaces all answers with the snapshot and adds a `restored` version itself (undoable). Restore needs the admin password on protected events; archive state is not versioned.
 - **Painting for others.** Edit tokens are kept per answer (`quedamos.tokens.<eventId>` = {responseId: token}), so a browser can add and later edit other people. The editor works on answer objects (`newAnswer`) and saves through a queue, so switching people mid-save can't mix up slots.
 
+- **Google Calendar shadow, zero knowledge.** In edit mode on my own answer, my busy times show as a hatch behind the grid, with a thin color lane per calendar. It is all in `public/gcal.js` and runs in the browser: the Google Identity Services token flow (no secret, no refresh token, no backend), `calendar.freebusy` + `calendar.calendarlist.readonly` scopes, free/busy only, never titles. The Google script is loaded only after the user clicks connect and confirms a privacy notice. The token, calendar list and busy times live in memory only (`gcal` state, a status machine `off > notice > connecting > picking > on`, or `error`). The one thing persisted is the picked calendars as SHA-256 hashes of their ids in `quedamos.gcal`; Disconnect revokes the token and deletes them. Busy intervals are converted to minute ranges per event day in the event's zone (`busyToDayRanges`), so the layer is minute-precise, independent of the slot size. The layer has `pointer-events: none`, so painting (`elementFromPoint`) is unaffected. An expired token gets one silent refresh, then a "Reconnect" button.
 - **No accounts.** You type your name. The browser remembers which response is yours per event (`localStorage`), so you can come back and edit. A second person using the same name gets a 409 and a "That's me / use another name" choice instead of silently overwriting.
 - **Optional admin password per event**, set on creation (PBKDF2-SHA256, salted, 100k iterations). The admin can edit or remove anyone's answer and archive / unarchive the event. Wrong tries are counted per event + client IP (`admin_failures`); from the 3rd one on, the 403 carries the masked password (first + last character, real length, e.g. `q******s`), and a correct password resets the count. The browser remembers a revealed hint and shows it in the 🔒 badge (event header + recent card); before that the badge just says "Protected".
 - **Who may change an answer.** Without an admin password: anyone with the link. With one: the browser that created the answer (edit token in localStorage) or the admin. So on a protected event, "That's me" after a name clash only works for the admin; others pick another name.
