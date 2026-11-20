@@ -3,7 +3,7 @@
 ## Cloudflare setup
 
 ```
-browser ──► Worker "quedamos" (quedamos.egregore85.workers.dev)
+browser ──► Worker "quedamos" (quedamos.egregore.fyi, custom domain)
               ├─ /api/*      → src/worker.js (JSON API) ──► D1 "quedamos-db"
               └─ everything else → static assets from public/ (ASSETS binding)
 browser ──► Google Calendar API directly (FreeBusy + calendar list), never via the Worker
@@ -15,6 +15,20 @@ browser ──► Google Calendar API directly (FreeBusy + calendar list), never
 | Database | D1 `quedamos-db`, binding `DB` |
 | Build / versioning / logs | Tailwind CLI + self-hosted Inter on build, `x-app-version` reload banner, Workers Logs on |
 | Tests | `npm test`: vitest, API tests run the real worker in the Workers runtime against a local D1 (`@cloudflare/vitest-plugin`), plus unit tests for `public/calendar.js` and the pure helpers of `public/gcal.js` |
+
+## Google OAuth setup
+
+The Google Calendar shadow needs an OAuth client, managed in Google Cloud, not in this repo.
+
+| Piece | What / where |
+|---|---|
+| GCP project | `quedamos-515314` (no organization), Google Calendar API enabled |
+| OAuth client | "Quedamos web", web application, id in `GCAL_CLIENT_ID` in `public/gcal.js` (public by design, no secret used) |
+| Allowed JS origins | `https://quedamos.egregore.fyi`, `http://localhost:8787`; a new origin (other domain or dev port) must be added there, changes take minutes to hours |
+| Consent screen | External, **Testing**: only listed test users (max 100) can connect. "Publish app" on the Audience page lifts that |
+| Scopes | `calendar.freebusy`, `calendar.calendarlist.readonly`, both non-sensitive per the console |
+| Support / developer contact | `quedamos-support@googlegroups.com` (Google Group, anyone can post) |
+| Privacy link / domain | `https://quedamos.egregore.fyi/privacy`, authorized domain `egregore.fyi` |
 
 ## Data model
 
