@@ -440,13 +440,13 @@ function gcalRenderPanel() {
   if (!gcal.panel) return;
   const small = "btn btn-sm";
   const title = h("span", { class: "text-sm font-semibold text-stone-700" }, t("gcalTitle"));
-  if (gcal.status === "off" || gcal.status === "error") {
+  if (gcal.status === "off" || gcal.status === "error" || gcal.status === "notice") {
     const expired = gcal.status === "error" && gcal.error === "expired";
     fill(gcal.panel, title,
       gcal.status === "error" && h("p", { class: "text-sm font-medium text-rose-700" }, t(`gcalErr_${gcal.error}`)),
       h("div", { class: "flex flex-wrap items-center gap-2" },
         h("button", { type: "button", class: small, onclick: expired ? gcalReconnect : gcalConnect }, expired ? t("gcalReconnect") : t("gcalConnect"))),
-      gcal.status === "off" && h("p", { class: "text-sm text-stone-500" }, t("gcalHint")));
+      gcal.status !== "error" && h("p", { class: "text-sm text-stone-500" }, t("gcalHint")));
   } else if (gcal.status === "on") {
     fill(gcal.panel, title,
       h("div", { class: "flex flex-wrap items-center gap-1.5" },
@@ -465,7 +465,11 @@ function gcalRenderPanel() {
         h("button", { type: "button", class: small, onclick: gcalEditSelection }, t("gcalCalendars")),
         h("button", { type: "button", class: small, onclick: gcalDisconnect }, t("gcalDisconnect"))));
   } else {
-    fill(gcal.panel, title, h("p", { class: "text-sm text-stone-500" }, t("gcalConnecting")));
+    // a popup the browser blocked silently never calls back, so connecting must be cancelable
+    fill(gcal.panel, title,
+      h("div", { class: "flex flex-wrap items-center gap-2" },
+        h("p", { class: "text-sm text-stone-500" }, t("gcalConnecting")),
+        gcal.status === "connecting" && h("button", { type: "button", class: small, onclick: gcalDisconnect }, t("cancel"))));
   }
 }
 
