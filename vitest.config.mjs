@@ -15,7 +15,7 @@ export default defineConfig({
         test: { name: "api", include: ["test/api.test.js"], setupFiles: ["test/apply-migrations.js"] },
       },
       {
-        test: { name: "calendar", include: ["test/calendar.test.js"], environment: "node" },
+        test: { name: "calendar", include: ["test/calendar.test.js", "test/gcal.test.js"], environment: "node" },
       },
     ],
   },
