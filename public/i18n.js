@@ -101,6 +101,9 @@ const STRINGS = {
     language: "Language",
 
     home_intro: "Pick the days, share the link, and everyone paints when they're free. The greener a slot, the more people can make it.",
+    home_gcalTitle: "Bring your Google Calendar along",
+    home_gcalText: "Your busy times show up as a faint shadow while you paint, so you don't double-book yourself. Just busy or free, never what's in your calendar. It stays in your browser, our server never sees a thing.",
+    home_gcalLink: "How that works, privacy-wise",
     inspiredBy: "Inspired by",
     privacy: "Privacy",
     newEvent: "New event",
@@ -275,6 +278,9 @@ const STRINGS = {
     language: "Sprache",
 
     home_intro: "Tage auswählen, Link teilen, und alle malen an, wann sie Zeit haben. Je grüner ein Feld, desto mehr Leute können.",
+    home_gcalTitle: "Bring deinen Google Kalender mit",
+    home_gcalText: "Deine belegten Zeiten liegen als leichter Schatten unter dem Raster, während du malst. So planst du dich nicht doppelt ein. Nur belegt oder frei, nie was in deinem Kalender steht. Alles bleibt in deinem Browser, unser Server sieht davon nichts.",
+    home_gcalLink: "Wie das mit dem Datenschutz läuft",
     inspiredBy: "Inspiriert von",
     privacy: "Datenschutz",
     newEvent: "Neuer Termin",
