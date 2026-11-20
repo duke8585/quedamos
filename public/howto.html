@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fafaf9">
+  <title>How it works - Quedamos</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%23ecfdf5'/><rect x='6' y='6' width='9' height='9' rx='2.5' fill='%23a7f3d0'/><rect x='17' y='6' width='9' height='9' rx='2.5' fill='%2310b981'/><rect x='6' y='17' width='9' height='9' rx='2.5' fill='%23047857'/><rect x='17' y='17' width='9' height='9' rx='2.5' fill='%2334d399'/></svg>">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="min-h-dvh font-sans">
+  <header class="border-b border-stone-200/70 bg-stone-50/80">
+    <div class="mx-auto flex h-16 max-w-3xl items-center gap-3 px-4 sm:px-6">
+      <a href="/" class="flex items-center gap-2.5 rounded-xl text-xl font-bold tracking-tight text-stone-900">
+        <span class="logo" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span>Quedamos</span>
+      </a>
+      <nav class="ml-auto flex gap-3 text-sm font-semibold text-stone-500">
+        <a href="#en" class="hover:text-stone-900">English</a>
+        <a href="#de" class="hover:text-stone-900">Deutsch</a>
+        <a href="/privacy" class="hover:text-stone-900">Privacy</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="mx-auto flex max-w-3xl flex-col gap-12 px-4 pt-8 pb-24 text-stone-700 sm:px-6 [&_h1]:text-3xl [&_h1]:font-bold [&_h1]:tracking-tight [&_h1]:text-stone-900 [&_h2]:mt-8 [&_h2]:text-lg [&_h2]:font-bold [&_h2]:text-stone-900 [&_p]:mt-2 [&_ul]:mt-2 [&_ul]:list-disc [&_ul]:pl-5 [&_li]:mt-1 [&_a]:underline [&_kbd]:rounded [&_kbd]:bg-stone-200 [&_kbd]:px-1.5 [&_kbd]:text-sm [&_kbd]:font-semibold [&_kbd]:text-stone-800">
+    <section id="en" lang="en">
+      <h1>How it works</h1>
+      <p>No accounts, no app. One link per event, and everyone paints when they're free.</p>
+
+      <h2>1. Create an event</h2>
+      <p>Click or drag over the days, set the daily window, the slot size and the time zone. Optionally set an admin password. Then share the link.</p>
+
+      <h2>2. Paint your time</h2>
+      <ul>
+        <li>Drag across the grid to fill a rectangle. Start on a painted slot to erase.</li>
+        <li>Two brushes: <kbd>Available</kbd> (green) and <kbd>If needed</kbd> (amber stripes).</li>
+        <li>Saves as you go. Your browser remembers which answer is yours, so you can come back and change it.</li>
+        <li><kbd>Show when others are free</kbd> puts the group's availability faintly behind your grid.</li>
+      </ul>
+
+      <h2 id="google">3. Your Google Calendar as a shadow</h2>
+      <p>In your own edit view, click <kbd>Show my Google Calendar</kbd> and pick your calendars (work, private, shared ones). Your busy times appear as a grey hatch under the grid, with a thin color strip per calendar. Click a calendar's chip to hide it, <kbd>Disconnect</kbd> to stop.</p>
+      <p>Only busy or free, never titles or details. It all happens in your browser and never reaches our server. Details on the <a href="/privacy#google">privacy page</a>.</p>
+
+      <h2>4. Fill in for someone else</h2>
+      <p>Collecting answers from someone who won't open the link? Click <kbd>+ Add person</kbd>, type their name and paint for them. You can come back and edit their answer from the same browser. On an event with an admin password, only you and the admin can change it later.</p>
+
+      <h2>5. Pick a time and export it</h2>
+      <ul>
+        <li>The <kbd>Group</kbd> view is a heatmap: the greener, the more people can make it. Dark green means everyone.</li>
+        <li><kbd>Best times</kbd> lists the strongest slots. Hover or tap a slot to see who can make it.</li>
+        <li>Click a slot to pin it, then the calendar icon: add it to Google Calendar, or download an <kbd>.ics</kbd> file for Apple Calendar, Outlook and the rest.</li>
+      </ul>
+
+      <h2>6. Admin and undo</h2>
+      <ul>
+        <li>With the admin password you can edit or remove anyone's answer and archive the event.</li>
+        <li><kbd>Version history</kbd> at the bottom of an event keeps every change, and any version can be restored.</li>
+      </ul>
+    </section>
+
+    <section id="de" lang="de">
+      <h1>So funktioniert's</h1>
+      <p>Keine Konten, keine App. Ein Link pro Event, und alle malen an, wann sie Zeit haben.</p>
+
+      <h2>1. Event anlegen</h2>
+      <p>Tage anklicken oder darüber ziehen, tägliches Zeitfenster, Raster und Zeitzone wählen. Optional ein Admin-Passwort setzen. Dann den Link teilen.</p>
+
+      <h2>2. Zeiten anmalen</h2>
+      <ul>
+        <li>Über das Raster ziehen füllt ein Rechteck. Auf einem bemalten Feld starten radiert.</li>
+        <li>Zwei Pinsel: <kbd>Kann</kbd> (grün) und <kbd>Notfalls</kbd> (gelb gestreift).</li>
+        <li>Speichert automatisch. Dein Browser merkt sich, welche Antwort deine ist, du kannst sie später ändern.</li>
+        <li><kbd>Zeigen, wann andere können</kbd> legt die Verfügbarkeit der Gruppe blass hinter dein Raster.</li>
+      </ul>
+
+      <h2 id="google-de">3. Dein Google Kalender als Schatten</h2>
+      <p>In deiner eigenen Ansicht auf <kbd>Meinen Google Kalender zeigen</kbd> klicken und Kalender wählen (Arbeit, privat, geteilte). Deine belegten Zeiten erscheinen als graue Schraffur unter dem Raster, mit einem dünnen Farbstreifen pro Kalender. Klick auf einen Kalender blendet ihn aus, <kbd>Trennen</kbd> beendet es.</p>
+      <p>Nur belegt oder frei, nie Titel oder Details. Alles passiert in deinem Browser und erreicht nie unseren Server. Mehr dazu im <a href="/privacy#google-de">Datenschutz</a>.</p>
+
+      <h2>4. Für andere eintragen</h2>
+      <p>Jemand macht den Link nicht auf? Auf <kbd>+ Person hinzufügen</kbd> klicken, Namen eintippen und für die Person malen. Aus demselben Browser kannst du die Antwort später weiter bearbeiten. Bei Events mit Admin-Passwort können sie danach nur du und der Admin ändern.</p>
+
+      <h2>5. Termin finden und exportieren</h2>
+      <ul>
+        <li>Die Ansicht <kbd>Gruppe</kbd> ist eine Heatmap: je grüner, desto mehr Leute können. Dunkelgrün heißt alle.</li>
+        <li><kbd>Beste Zeiten</kbd> zeigt die stärksten Slots. Über einen Slot fahren oder tippen zeigt, wer kann.</li>
+        <li>Slot anklicken zum Festhalten, dann das Kalender-Symbol: in Google Kalender eintragen oder eine <kbd>.ics</kbd>-Datei für Apple Kalender, Outlook und Co. laden.</li>
+      </ul>
+
+      <h2>6. Admin und Rückgängig</h2>
+      <ul>
+        <li>Mit dem Admin-Passwort kannst du jede Antwort ändern oder entfernen und das Event archivieren.</li>
+        <li>Der <kbd>Versionsverlauf</kbd> unten im Event hält jede Änderung fest, jede Version lässt sich wiederherstellen.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
