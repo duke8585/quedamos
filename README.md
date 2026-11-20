@@ -2,7 +2,7 @@
 
 ¿Quedamos? - "shall we meet?". A no-login when-can-everyone-meet tool: pick dates, share the link, everyone paints their availability, and the group view shows a heatmap (greener = more people). Cloudflare Worker (API) + D1 + vanilla JS frontend styled with Tailwind v4, no runtime dependencies.
 
-Live: https://quedamos.egregore.fyi (how it works: [/howto](https://quedamos.egregore.fyi/howto))
+Live: https://quedamos.egregore.fyi (how it works: [/howto](https://quedamos.egregore.fyi/#/))
 
 Inspired by [timeful.app](https://timeful.app).
 
